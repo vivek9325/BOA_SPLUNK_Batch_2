@@ -20,3 +20,8 @@ Data Masking ----
 index=vk_idx | erex emails examples="MariaDubois@example.com,zecora@buttercupgames.com"
 
 index=vk_idx | regex _raw = "From:\s+<[[:alnum:]]+@[[:alnum:]]+\.[[:alpha:]]+>"
+
+Date & Time Function ----
+
+
+index=main sourcetype=csv| table severity, _time, time_submitted | eval time_submitted_epoc = strptime(time_submitted, "%d-%m-%y %H:%M") | eval _time = time_submitted_epoc | timechart count by severity
