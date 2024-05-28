@@ -2,3 +2,5 @@ Rex ----
 
 
 index=vk_idx | rex field=_raw "From:\s+<(?P<From_Mail_ID>.*)>\s+To"
+
+index=vk_idx | rex field=_raw "From:\s+<(?P<From_Mail_ID>.*)>\s+To:\s+<(?P<To_Mail_ID>.*)>"
