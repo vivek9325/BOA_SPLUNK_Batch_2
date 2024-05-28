@@ -1,1 +1,4 @@
+Rex ----
 
+
+index=vk_idx | rex field=_raw "From:\s+<(?P<From_Mail_ID>.*)>\s+To"
