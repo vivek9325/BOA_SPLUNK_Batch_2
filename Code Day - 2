@@ -8,3 +8,8 @@ index=vk_idx | rex field=_raw "From:\s+<(?P<From_Mail_ID>.*)>\s+To:\s+<(?P<To_Ma
 |makeresults | eval text="user_name=vk;search;my_saved_search" | rex field=text "user_name=(?P<name>\w+);(?P<app_name>\w+);(?P<saved_search_name>\w+)"
 
 |makeresults | eval credit_card_number="1234-5678-9101-1213" | rex field=credit_card_number "(?<digits>\d{4})" max_match=0 offset_field=new_field
+
+
+Data Masking ----
+
+|makeresults | eval credit_card_number="1234-5678-9101-1213" | rex field=credit_card_number mode=sed "s/(\d{4}-){3}/XXXX-XXXX-XXXX-/g"
