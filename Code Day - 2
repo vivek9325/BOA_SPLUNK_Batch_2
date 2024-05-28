@@ -18,3 +18,5 @@ Data Masking ----
 
 
 index=vk_idx | erex emails examples="MariaDubois@example.com,zecora@buttercupgames.com"
+
+index=vk_idx | regex _raw = "From:\s+<[[:alnum:]]+@[[:alnum:]]+\.[[:alpha:]]+>"
