@@ -24,3 +24,7 @@ index="main" sourcetype="csv"
     [ search index="vk_join_idx" sourcetype="csv" 
     | head 10 
     | table ticket_number, time_taken]
+
+Append ---- 
+
+index=main sourcetype=csv | table ticket_number, severity, current_ticket_state | head 5 | append [search index=vk_join_idx | table time_taken | head 5]
