@@ -1,3 +1,7 @@
 Macros ----
 
 index=main sourcetype=csv current_ticket_state="$state$" severity=$sev$ | chart count by severity, current_ticket_state
+
+output lookup -----
+
+|makeresults | eval ticket_number="00000", time_taken="100hrs" | fields - _time| outputlookup vk_sample_lookup.csv append=true
