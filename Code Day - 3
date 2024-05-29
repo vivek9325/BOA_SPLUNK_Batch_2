@@ -33,3 +33,9 @@ index=main sourcetype=csv | table ticket_number, severity, current_ticket_state 
 AppendCols -----
 
 index=main sourcetype=csv | table ticket_number, severity, current_ticket_state | head 5 | appendcols [search index=vk_join_idx | table time_taken | head 5]
+
+
+AppendPipe ----
+
+index=main source="sample_tickets.csv" | stats count by severity, current_ticket_state | appendpipe [stats sum(count) as count by severity | eval current_ticket_state="Sum of Severity"] | sort severity
+
