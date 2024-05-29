@@ -1,1 +1,3 @@
+Macros ----
+
 index=main sourcetype=csv current_ticket_state="$state$" severity=$sev$ | chart count by severity, current_ticket_state
