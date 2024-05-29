@@ -28,3 +28,8 @@ index="main" sourcetype="csv"
 Append ---- 
 
 index=main sourcetype=csv | table ticket_number, severity, current_ticket_state | head 5 | append [search index=vk_join_idx | table time_taken | head 5]
+
+
+AppendCols -----
+
+index=main sourcetype=csv | table ticket_number, severity, current_ticket_state | head 5 | appendcols [search index=vk_join_idx | table time_taken | head 5]
