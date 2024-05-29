@@ -14,3 +14,13 @@ index="main" sourcetype="csv"
 | join type=inner ticket_number 
     [ search index="vk_join_idx" sourcetype="csv" 
     | table ticket_number, time_taken]
+
+Overwrite ---------------
+
+index="main" sourcetype="csv" 
+| table ticket_number, severity, current_ticket_state 
+| eval time_taken="NULL" 
+| join type=left ticket_number overwrite=false
+    [ search index="vk_join_idx" sourcetype="csv" 
+    | head 10 
+    | table ticket_number, time_taken]
