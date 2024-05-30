@@ -22,3 +22,7 @@ Panel level search ------------
       </search>
 
 
+Savedsearch Calling ----
+
+ <search id="saved_search_1" ref="vk_savedsearch"></search>
+
