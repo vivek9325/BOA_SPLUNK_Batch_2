@@ -1,0 +1,24 @@
+Base search ---------
+
+
+  <search id="base_search1">
+    
+    <query>
+      
+      index=main source=Sample_tickets.csv | table severity, current_ticket_state, asset_id
+      
+    </query>
+    
+    <earliest>0</earliest>
+    <latest>now</latest>
+  </search>
+
+
+
+Panel level search ------------
+
+ <search base="base_search1">
+        <query>| stats count by severity</query>
+      </search>
+
+
