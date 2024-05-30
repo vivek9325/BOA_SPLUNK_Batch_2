@@ -30,3 +30,6 @@ transaction ------\
 
 
 index="vk_new" source="tutorialdata.zip:*" sourcetype = access_* | transaction JSESSIONID clientip startswith="view" endswith="purchase"
+
+
+index="vk_new" source="tutorialdata.zip:*" sourcetype = access_* | transaction action maxspan=30s maxevents=2
