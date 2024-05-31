@@ -3,9 +3,8 @@
   <fieldset submitButton="false">
     <input type="dropdown" token="gender" searchWhenChanged="true">
       <label>Gender</label>
-      <choice value="*">All</choice>
-      <default>*</default>
-      <initialValue>*</initialValue>
+      <default>male</default>
+      <initialValue>male</initialValue>
       <fieldForLabel>gender</fieldForLabel>
       <fieldForValue>gender</fieldForValue>
       <search>
@@ -47,11 +46,18 @@
     </input>
   </fieldset>
   <row>
-    <panel>
-      <title>Male</title>
+    <panel rejects="$hide_panel_male_singleval$">
       <single>
         <search>
-          <query>index=main source="StudentsPerformance.csv" | where gender="male"| stats count</query>
+          <done>
+            <condition match="'job.resultCount'==0">
+              <set token="hide_panel_male_singleval"></set>
+            </condition>
+            <condition>
+              <unset token="hide_panel_male_singleval"></unset>
+            </condition>
+          </done>
+          <query>index=main source="StudentsPerformance.csv" gender=$gender$ | stats count |where gender="male"</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
@@ -62,6 +68,7 @@
         <option name="numberPrecision">0</option>
         <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
         <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
         <option name="showSparkline">1</option>
         <option name="showTrendIndicator">1</option>
         <option name="trellis.enabled">0</option>
@@ -74,14 +81,21 @@
         <option name="useThousandSeparators">1</option>
       </single>
     </panel>
-    <panel>
-      <title>Female</title>
+    <panel rejects="$hide_panel_female_singleval$">
       <single>
         <search>
-          <query>index=main source="StudentsPerformance.csv" | where gender="female"| stats count</query>
+          <query>index=main source="StudentsPerformance.csv" gender=$gender$|  stats count| where gender="female"| </query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
+          <done>
+            <condition match="'job.resultCount'==0">
+              <set token="hide_panel_female_singleval"></set>
+            </condition>
+            <condition>
+              <unset token="hide_panel_female_singleval"></unset>
+            </condition>
+          </done>
         </search>
         <option name="colorBy">value</option>
         <option name="colorMode">block</option>
@@ -201,7 +215,6 @@
         <choice value="math">Math</choice>
       </input>
       <input type="radio" token="reading">
-        
         <label></label>
         <change>
           <condition value="reading">
@@ -227,9 +240,9 @@
             <unset token="form.reading"></unset>
             <unset token="math"></unset>
             <unset token="form.math"></unset>
-            </condition>
+          </condition>
         </change>
-         <choice value="writing">Writing</choice>
+        <choice value="writing">Writing</choice>
       </input>
       <chart>
         <search>
