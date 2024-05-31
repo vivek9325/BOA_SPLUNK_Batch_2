@@ -14,6 +14,8 @@
         <latest></latest>
       </search>
     </input>
+    
+    
     <input type="dropdown" token="score_by" searchWhenChanged="true">
       <label>Score By</label>
       <choice value="all">All</choice>
@@ -22,7 +24,36 @@
       <choice value="ethinicity_score_by">Ethinicity</choice>
       <default>all</default>
       <initialValue>all</initialValue>
+      
+      <change>
+        
+        <condition label="Gender">
+          
+          <set token="show_gender_score_panel"></set>
+          
+        </condition>
+        
+        <condition value="ethinicity_score_by">
+          
+          <set token="show_ethinicity_score_panel"></set>
+          
+        </condition>
+        
+        <condition match="$value$==&quot;both_score_by&quot;">
+        
+        
+          <set token="show_both_score_panel"></set>
+          
+          </condition>
+          
+        
+      </change>
+      
     </input>
+    
+    
+    
+    
   </fieldset>
   <row>
     <panel>
@@ -81,7 +112,7 @@
     </panel>
   </row>
   <row>
-    <panel>
+    <panel depends="$show_gender_score_panel$">
       <title>Avg Score by Gender</title>
       <chart>
         <search>
@@ -125,7 +156,7 @@
     </panel>
   </row>
   <row>
-    <panel>
+    <panel depends="$show_ethinicity_score_panel$">
       <title>Avg Score by Ethinicity</title>
       <chart>
         <search>
@@ -169,7 +200,7 @@
     </panel>
   </row>
   <row>
-    <panel>
+    <panel depends="$show_both_score_panel$">
       <title>Avg Score by both gender and ethinicity</title>
       <chart>
         <search>
