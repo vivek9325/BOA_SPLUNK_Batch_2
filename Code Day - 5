@@ -1,0 +1,8 @@
+BiLL Predict Model ----------
+
+index=vk_idx source="weather_2016_2020_daily.csv" 
+| eval date_epoc=strptime(Date,"%Y-%m-%d") 
+| table Date, date_epoc, _time, Temp_avg, Dew_avg 
+| eval _time = date_epoc 
+| timechart span=1mon avg(Temp_avg) as avg_temp, avg(Dew_avg) as avg_dew 
+| predict algorithm=BiLL avg_temp, avg_dew future_timespan=30
