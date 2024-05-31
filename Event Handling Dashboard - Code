@@ -3,8 +3,8 @@
   <fieldset submitButton="false">
     <input type="dropdown" token="gender" searchWhenChanged="true">
       <label>Gender</label>
-      <default>male</default>
-      <initialValue>male</initialValue>
+      <default>*</default>
+      <initialValue>*</initialValue>
       <fieldForLabel>gender</fieldForLabel>
       <fieldForValue>gender</fieldForValue>
       <search>
@@ -12,6 +12,7 @@
         <earliest>0</earliest>
         <latest></latest>
       </search>
+      <choice value="*">All</choice>
     </input>
     <input type="dropdown" token="score_by" searchWhenChanged="true">
       <label>Score By</label>
@@ -57,7 +58,7 @@
               <unset token="hide_panel_male_singleval"></unset>
             </condition>
           </done>
-          <query>index=main source="StudentsPerformance.csv" gender=$gender$ | stats count |where gender="male"</query>
+          <query>index=main source="StudentsPerformance.csv" gender=$gender$ | stats count by gender | where gender="male" | table count</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
@@ -84,10 +85,6 @@
     <panel rejects="$hide_panel_female_singleval$">
       <single>
         <search>
-          <query>index=main source="StudentsPerformance.csv" gender=$gender$|  stats count| where gender="female"| </query>
-          <earliest>-24h@h</earliest>
-          <latest>now</latest>
-          <sampleRatio>1</sampleRatio>
           <done>
             <condition match="'job.resultCount'==0">
               <set token="hide_panel_female_singleval"></set>
@@ -96,6 +93,10 @@
               <unset token="hide_panel_female_singleval"></unset>
             </condition>
           </done>
+          <query>index=main source="StudentsPerformance.csv" gender="$gender$"|  stats count by gender | where gender="female" | table count</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
         </search>
         <option name="colorBy">value</option>
         <option name="colorMode">block</option>
@@ -103,6 +104,7 @@
         <option name="numberPrecision">0</option>
         <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
         <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
         <option name="showSparkline">1</option>
         <option name="showTrendIndicator">1</option>
         <option name="trellis.enabled">0</option>
